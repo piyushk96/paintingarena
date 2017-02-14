@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paint</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: grey ;
+        }
+        #canvasContainer{
+            background-color: white;
+            margin: 50px 200px;
+            display: inline-block;
+        }
+        #tempCanvas{
+            top: 50px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="canvasContainer">
+    <canvas id="workArea" width="700" height="400"></canvas>
+    <canvas id="tempCanvas" width="700" height="400"></canvas>
+</div>
+
+<!--<button id="copy" onclick="c()">line</button>-->
+
+<script type="text/javascript">
+    var canvas, tempCanvas, ctx, ctxTemp;
+    var startX, startY, endX, endY;
+    var paint = false;
+    $(document).ready(function () {
+        canvas = $("#workArea");
+        ctx = canvas[0].getContext("2d");   //for jquery refer to raw DOM node of canvas
+        tempCanvas = $('#tempCanvas');
+        ctxTemp = tempCanvas[0].getContext("2d");
+    });
+
+    $("canvas").on('mousedown', function (e) {
+        startX = endX = e.offsetX;
+        startY = endY = e.offsetY;
+
+        paint = true;
+    });
+
+    $("canvas").on('mouseup', function () {
+        paint = false;
+        ctx.drawImage(tempCanvas[0], 0, 0);
+        ctxTemp.clearRect(0, 0, tempCanvas.width(), tempCanvas.height());
+    });
+
+    $("canvas").on('mousemove', function(e) {
+        if(paint) {
+            ctxTemp.clearRect(0, 0, tempCanvas.width(), tempCanvas.height());
+            endX = e.offsetX;
+            endY = e.offsetY;
+
+            ctxTemp.strokeRect(startX, startY, endX - startX, endY - startY);
+        }
+    });
+
+</script>
+</body>
+</html>
