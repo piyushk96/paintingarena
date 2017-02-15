@@ -59,8 +59,17 @@ $("canvas").on('mousemove touchmove', function(e) {
             case 8: ctxTemp.strokeRect(startX, startY, endX - startX, endY - startY);
                 break;
             case 9:
+                var centerX = (endX - startX)/2 + startX;
+                var centerY = (endY - startY)/2 + startY;
+                ctxTemp.beginPath();
+                ctxTemp.ellipse(centerX, centerY, Math.abs(endX - centerX), Math.abs(endY - centerY), 0, 0, 2 * Math.PI, true);
+                ctxTemp.stroke();
                 break;
             case 10:
+                ctxTemp.beginPath();
+                ctxTemp.moveTo(startX, startY);
+                ctxTemp.lineTo(endX, endY);
+                ctxTemp.stroke();
                 break;
         }
     }
@@ -81,7 +90,7 @@ function changeCursor() {
             break;
         case 2: $('#canvasContainer').css('cursor', 'url(./icons/paint-bucket.png) 0 20, auto');
             break;
-        case 3: $('#canvasContainer').css('cursor', 'url(./icons/eraser.png) 0 32, auto');
+        case 3: $('#canvasContainer').css('cursor', 'url(./icons/eraser.png) 0 17, auto');
             break;
         case 4: $('#canvasContainer').css('cursor', 'url(./icons/pencil.png) 0 32, auto');
             break;
