@@ -74,11 +74,29 @@ $(".tool").on('click tap', function () {
 });
 
 function changeCursor() {
-    if($.inArray(selectedTool, [0, 8, 9, 10]) != -1)
-        $('#canvasContainer').css('cursor', 'crosshair');
-    // else if(selectedTool == 3){
-    //     $('#canvasContainer').awesomeCursor('square-o');
-    // }
-    else
-        $('#canvasContainer').css('cursor', 'auto');
+    switch (selectedTool){
+        case 0: $('#canvasContainer').css('cursor', 'crosshair');
+            break;
+        case 1: $('#canvasContainer').css('cursor', 'url(./icons/hand.png) 0 20, auto');
+            break;
+        case 2: $('#canvasContainer').css('cursor', 'url(./icons/paint-bucket.png) 0 20, auto');
+            break;
+        case 3: $('#canvasContainer').css('cursor', 'url(./icons/eraser.png) 0 32, auto');
+            break;
+        case 4: $('#canvasContainer').css('cursor', 'url(./icons/pencil.png) 0 32, auto');
+            break;
+        case 5: $('#canvasContainer').css('cursor', 'url(./icons/paint-brush.png) 0 30, auto');
+            break;
+        case 6: $('#canvasContainer').css('cursor', 'url(./icons/dropper.png) 0 30, auto');
+            break;
+        case 7: $('#canvasContainer').css('cursor', 'text');
+            break;
+        case 8: $('#canvasContainer').css('cursor', 'crosshair');
+            break;
+        case 9: $('#canvasContainer').css('cursor', 'crosshair');
+            break;
+        case 10: $('#canvasContainer').css('cursor', 'crosshair');
+            break;
+        default: $('#canvasContainer').css('cursor', 'auto');
+    }
 }
