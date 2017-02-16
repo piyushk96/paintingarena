@@ -10,6 +10,8 @@ body{
     margin: 50px 150px;
     display: inline-block;
     cursor: crosshair;
+    width: 700px;
+    height: 400px;
 }
 #tempCanvas{
     top: 50px;
