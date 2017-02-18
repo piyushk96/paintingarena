@@ -7,6 +7,7 @@ var eraserColor = 'rgba(255,255,255,255)';     //white
 var eraserSize = 15;
 var startColor, colorLayer;
 var pixelStack = [];
+var sprayIntervalId;
 
 $(document).ready(function () {
     workarea = $("#workArea");
@@ -24,7 +25,6 @@ $("canvas").on('mousedown touchstart', function (e) {
     if(selectedTool == 2) {
         startColor = ctx.getImageData(startX, startY, 1, 1).data;
         colorLayer = ctx.getImageData(0, 0, workarea.width(), workarea.height());
-        console.log(colorLayer)
         pixelStack.push([startX, startY]);
         fillColor();
     }
@@ -36,6 +36,9 @@ $("canvas").on('mousedown touchstart', function (e) {
         var imgData = ctx.getImageData(startX, startY, 2, 2);
         paintColor = "rgba(" + imgData.data[0] + "," +  imgData.data[1] + "," + imgData.data[2] + "," + imgData.data[3] + ")";
     }
+    else if(selectedTool == 11){
+        sprayIntervalId = setInterval(spray, 50);
+    }
     else
         ctxTemp.strokeStyle = paintColor;
 });
@@ -44,6 +47,7 @@ $("canvas").on('mouseup touchend', function () {
     paint = false;
     ctx.drawImage(tempCanvas[0], 0, 0);
     ctxTemp.clearRect(0, 0, tempCanvas.width(), tempCanvas.height());
+    clearInterval(sprayIntervalId);
 });
 
 $("canvas").on('mousemove touchmove', function(e) {
@@ -114,6 +118,8 @@ function changeCursor() {
         case 9: $('#canvasContainer').css('cursor', 'crosshair');
             break;
         case 10: $('#canvasContainer').css('cursor', 'crosshair');
+            break;
+        case 11: $('#canvasContainer').css('cursor', 'url(./icons/spray.png) 30 0, auto');
             break;
         default: $('#canvasContainer').css('cursor', 'auto');
     }
@@ -195,4 +201,22 @@ function colorPixel(pixelPos)
     colorLayer.data[pixelPos+1] = c[1];
     colorLayer.data[pixelPos+2] = c[2];
     colorLayer.data[pixelPos+3] = c[3];
+}
+
+function getRandomOffset() {
+    var randomAngle = Math.random() * 360;
+    var randomRadius = Math.random() * 15;       //radius
+    return {
+        x : Math.cos(randomAngle) * randomRadius,
+        y : Math.sin(randomAngle) * randomRadius
+    }
+}
+
+function spray() {
+    for(var i=0; i<80; i++){        //density=30
+        var offset = getRandomOffset();
+        var x = endX + offset.x,
+            y = endY + offset.y;
+        ctx.fillRect(x, y, 1, 1);
+    }
 }
