@@ -26,6 +26,8 @@ $("canvas").on('mousedown touchstart', function (e) {
     startX = endX = e.offsetX;
     startY = endY = e.offsetY;
 
+    ctxTemp.strokeStyle = paintColor;
+    ctxTemp.lineWidth = 2;
     paint = true;
     if(selectedTool == 2) {
         startColor = ctx.getImageData(startX, startY, 1, 1).data;
@@ -41,15 +43,36 @@ $("canvas").on('mousedown touchstart', function (e) {
         ctx.fillStyle = eraserColor;
         ctx.fillRect(startX, startY, eraserSize, eraserSize);
     }
+    else if(selectedTool == 4){
+        ctxTemp.fillStyle = paintColor;
+        ctxTemp.fillRect(startX, startY, 1, 1);
+        ctxTemp.beginPath();
+    }
+    else if(selectedTool == 5){
+        ctxTemp.lineWidth = 10;
+        ctxTemp.fillStyle = paintColor;
+        ctxTemp.fillRect(startX-5, startY-5, 10, 10);
+        ctxTemp.beginPath();
+    }
     else if(selectedTool == 6){
         var imgData = ctx.getImageData(startX, startY, 1, 1);
-        paintColor = "rgba(" + imgData.data[0] + "," +  imgData.data[1] + "," + imgData.data[2] + "," + imgData.data[3] + ")";
+        paintColor = "rgba(" + imgData.data[0] + ", " +  imgData.data[1] + ", " + imgData.data[2] + ", " + imgData.data[3] + ")";
+        $('#color1').css('background-color', paintColor);
     }
     else if(selectedTool == 11){
+        ctx.fillStyle = paintColor;
         sprayIntervalId = setInterval(spray, 50);
     }
-    else
-        ctxTemp.strokeStyle = paintColor;
+}).on('contextmenu', function (e) {
+    var x = e.offsetX;
+    var y = e.offsetY;
+    if(selectedTool == 6){
+        var imgData = ctx.getImageData(x, y, 1, 1);
+        eraserColor = "rgba(" + imgData.data[0] + ", " +  imgData.data[1] + ", " + imgData.data[2] + ", " + imgData.data[3] + ")";
+        $('#color2').css('background-color', eraserColor);
+        return false;
+    }
+    return true;
 });
 
 $("canvas").on('mouseup touchend', function () {
@@ -73,8 +96,12 @@ $("canvas").on('mousemove touchmove', function(e) {
             case 3: ctx.fillRect(endX, endY, eraserSize, eraserSize);
                 break;
             case 4:
+                ctxTemp.lineTo(endX, endY);
+                ctxTemp.stroke();
                 break;
             case 5:
+                ctxTemp.lineTo(endX, endY);
+                ctxTemp.stroke();
                 break;
             case 7:
                 break;
