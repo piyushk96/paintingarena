@@ -9,88 +9,147 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<div id="toolBoxContainer">
-    <table id="toolBox" border="1">
-        <tr>
-            <td class="tool selectedTool">
-                <button type="button" title="Select">
-                    <img src="icons/dotted-square.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Move Selection">
-                    <img src="icons/hand.png" width="70%" height="70%">
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="tool">
-                <button type="button" id="paintBucket" title="Fill With Color">
-                    <img src="icons/paint-bucket.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Eraser">
-                    <img src="icons/eraser.png" width="70%" height="70%">
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="tool">
-                <button type="button" title="Pencil">
-                    <img src="icons/pencil.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Paint Brush">
-                    <img src="icons/paint-brush.png" width="70%" height="70%">
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="tool">
-                <button type="button" title="Pick Color">
-                    <img src="icons/dropper.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Insert Text">
-                    <img src="icons/text.png" width="70%" height="70%">
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="tool">
-                <button type="button" title="Rectangle">
-                    <img src="icons/rectangle.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Ellipse">
-                    <img src="icons/circle.png" width="70%" height="70%">
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td class="tool">
-                <button type="button" title="Line">
-                    <img src="icons/diagonal-line.png" width="70%" height="70%">
-                </button>
-            </td>
-            <td class="tool">
-                <button type="button" title="Spray">
-                    <img src="icons/spray.png" width="80%" height="80%">
-                </button>
-            </td>
-        </tr>
-    </table>
-</div>
-<div id="canvasContainer">
-    <canvas id="workArea" width="700" height="400"></canvas>
-    <canvas id="tempCanvas" width="700" height="400"></canvas>
-</div>
+<header>
+    <div id="colorPalleteContainer">
+        <div id="selectedColorsContainer">
+            <div class="colorBox selectedColorBox">
+                <div id="color1" class="color"></div>
+                <h5>Color 1</h5>
+            </div>
+            <div class="colorBox">
+                <div id="color2" class="color"></div>
+                <h5>Color 2</h5>
+            </div>
+        </div>
+        <table id="colorPallete" border="1">
+            <tr>
+                <td style="background-color: rgba(0,0,0,255)"></td>
+                <td style="background-color: rgba(123,123,123,255)"></td>
+                <td style="background-color: rgba(140,0,16,255)"></td>
+                <td style="background-color: rgba(239,24,33,255)"></td>
+                <td style="background-color: rgba(255,123,33,255)"></td>
+                <td style="background-color: rgba(255,247,0,255)"></td>
+                <td style="background-color: rgba(33,181,74,255)"></td>
+                <td style="background-color: rgba(0,165,239,255)"></td>
+                <td style="background-color: rgba(57,74,206,255)"></td>
+                <td style="background-color: rgba(165,74,165,255)"></td>
+            </tr>
+            <tr>
+                <td style="background-color: rgba(255,255,255,255)"></td>
+                <td style="background-color: rgba(190,190,190,255)"></td>
+                <td style="background-color: rgba(189,123,82,255)"></td>
+                <td style="background-color: rgba(255,173,206,255)"></td>
+                <td style="background-color: rgba(255,206,8,255)"></td>
+                <td style="background-color: rgba(239,231,180,255)"></td>
+                <td style="background-color: rgba(181,231,24,255)"></td>
+                <td style="background-color: rgba(156,222,239,255)"></td>
+                <td style="background-color: rgba(115,148,189,255)"></td>
+                <td style="background-color: rgba(206,189,231,255)"></td>
+            </tr>
+        </table>
+    </div>
+</header>
+<div id="main">
+    <div id="toolBoxContainer">
+        <table id="toolBox" border="1">
+            <tr>
+                <td class="tool selectedTool">
+                    <button type="button" title="Select">
+                        <img src="icons/dotted-square.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Move Selection">
+                        <img src="icons/hand.png" width="70%" height="70%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+                    <button type="button" id="paintBucket" title="Fill With Color">
+                        <img src="icons/paint-bucket.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Eraser">
+                        <img src="icons/eraser.png" width="70%" height="70%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+                    <button type="button" title="Pencil">
+                        <img src="icons/pencil.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Paint Brush">
+                        <img src="icons/paint-brush.png" width="70%" height="70%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+                    <button type="button" title="Pick Color">
+                        <img src="icons/dropper.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Insert Text">
+                        <img src="icons/text.png" width="70%" height="70%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+                    <button type="button" title="Rectangle">
+                        <img src="icons/rectangle.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Ellipse">
+                        <img src="icons/circle.png" width="70%" height="70%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+                    <button type="button" title="Line">
+                        <img src="icons/diagonal-line.png" width="70%" height="70%">
+                    </button>
+                </td>
+                <td class="tool">
+                    <button type="button" title="Spray">
+                        <img src="icons/spray.png" width="80%" height="80%">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
 
+                </td>
+                <td class="tool">
 
+                </td>
+            </tr>
+            <tr>
+                <td class="tool">
+
+                </td>
+                <td class="tool">
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="workArea"></canvas>
+        <canvas id="tempCanvas"></canvas>
+    </div>
+    <div id="historyContainer">
+
+    </div>
+</div>
 <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

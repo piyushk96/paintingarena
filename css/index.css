@@ -5,16 +5,73 @@
 body{
     background-color: grey ;
 }
+#main{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 5px;
+}
+header{
+    display: flex;
+    justify-content: flex-start;
+    background-color: #64cfff;
+    border-bottom: 2px solid blue;
+}
+#colorPalleteContainer{
+    margin: 5px 100px;
+    border-left: 1px solid black;
+    display: flex;
+    padding: 0 20px;
+}
+#selectedColorsContainer{
+    display: flex;
+}
+.colorBox{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #64cfff;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+}
+.color{
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 10px;
+    border: 2px solid black;
+}
+.colorBox:hover{
+    color: blue;
+}
+.selectedColorBox{
+    background-color: #ffd862;
+    border: 1px solid black;
+}
+#color1{
+    background-color: rgba(0,0,0,255);
+}
+#color2{
+    background-color: rgba(255,255,255,255);
+}
+#colorPallete td{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+#colorPallete{
+    margin: auto 20px;
+    /*border: 1px solid black;*/
+}
 #canvasContainer{
     background-color: white;
-    margin: 50px 150px;
     display: inline-block;
     cursor: crosshair;
-    width: 700px;
+    width: 100%;
+    max-width: 780px;
     height: 400px;
+    margin-left: 5px;
 }
 #tempCanvas{
-    top: 50px;
     position: absolute;
 }
 #toolBox{
@@ -22,18 +79,24 @@ body{
 }
 #toolBoxContainer{
     display: inline-block;
-    position: absolute;
-    margin: 50px 20px;
+    margin-left: 5px;
+    min-width: 90px;
 }
-td{
+#toolBox td{
     width: 40px;
     height: 40px;
 }
 td button{
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 .selectedTool button{
     background-color: lightcoral;
     border: none;
+}
+#historyContainer{
+    display: inline-block;
+    position: absolute;
+    right: 10px;
 }

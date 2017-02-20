@@ -2,11 +2,12 @@ var workarea, tempCanvas, ctx, ctxTemp;
 var startX, startY, endX, endY;
 var paint = false;
 var selectedTool = 0;
-var paintColor = "rgba(0,0,0,255)";            //black
-var eraserColor = 'rgba(255,255,255,255)';     //white
+var paintColor = "rgba(0, 0, 0, 255)";            //black
+var eraserColor = 'rgba(255, 255, 255, 255)';     //white
 var eraserSize = 15;
 var startColor, colorLayer;
 var pixelStack = [];
+var paintColorArr;
 var sprayIntervalId;
 
 $(document).ready(function () {
@@ -14,6 +15,10 @@ $(document).ready(function () {
     ctx = workarea[0].getContext("2d");   //for jquery refer to raw DOM node of canvas
     tempCanvas = $('#tempCanvas');
     ctxTemp = tempCanvas[0].getContext("2d");
+    var w = Math.ceil( $('#canvasContainer').width() ),
+        h = Math.ceil( $('#canvasContainer').height() );
+    workarea.attr({width : w, height : h});
+    tempCanvas.attr({width: w, height: h}).css("top", workarea.position().top);
 
 });
 
@@ -24,6 +29,10 @@ $("canvas").on('mousedown touchstart', function (e) {
     paint = true;
     if(selectedTool == 2) {
         startColor = ctx.getImageData(startX, startY, 1, 1).data;
+        paintColorArr = paintColor.substring(paintColor.indexOf('(') + 1, paintColor.lastIndexOf(')')).split(', ');
+        ////////start position is same color as paintColor
+        if(startColor[0]==paintColorArr[0] && startColor[1]==paintColorArr[1] && startColor[2]==paintColorArr[2] && startColor[3]==paintColorArr[3])
+            return;
         colorLayer = ctx.getImageData(0, 0, workarea.width(), workarea.height());
         pixelStack.push([startX, startY]);
         fillColor();
@@ -33,7 +42,7 @@ $("canvas").on('mousedown touchstart', function (e) {
         ctx.fillRect(startX, startY, eraserSize, eraserSize);
     }
     else if(selectedTool == 6){
-        var imgData = ctx.getImageData(startX, startY, 2, 2);
+        var imgData = ctx.getImageData(startX, startY, 1, 1);
         paintColor = "rgba(" + imgData.data[0] + "," +  imgData.data[1] + "," + imgData.data[2] + "," + imgData.data[3] + ")";
     }
     else if(selectedTool == 11){
@@ -94,6 +103,30 @@ $(".tool").on('click tap', function () {
     selectedTool = $('#toolBox td').index( $(this) );
     changeCursor();
 });
+
+$('.colorBox').on('click tap', function () {
+    $('.selectedColorBox').removeClass('selectedColorBox');
+    $(this).addClass('selectedColorBox');
+});
+
+$('#colorPallete td').on('click tap', function () {
+    var colorBoxId = $('.selectedColorBox').children()[0].id;
+    var currentColor = $(this).css('background-color');
+    currentColor = currentColor.replace('rgb', 'rgba').replace(')', ', 255)');
+    console.log(currentColor)
+    if (colorBoxId == 'color1')
+        paintColor = currentColor;
+    else
+        eraserColor = currentColor;
+    $('#' + colorBoxId).css('background-color', currentColor);
+}).on('contextmenu', function () {
+        var currentColor = $(this).css('background-color');
+        currentColor = currentColor.replace('rgb', 'rgba').replace(')', ', 255)');
+        eraserColor = currentColor;
+        $('#color2').css('background-color', currentColor);
+        return false;
+});
+
 
 function changeCursor() {
     switch (selectedTool){
@@ -196,11 +229,10 @@ function matchStartColor(pixelPos)
 
 function colorPixel(pixelPos)
 {
-    c = paintColor.substring(paintColor.indexOf('(') + 1, paintColor.lastIndexOf(')')).split(',');
-    colorLayer.data[pixelPos] = c[0];
-    colorLayer.data[pixelPos+1] = c[1];
-    colorLayer.data[pixelPos+2] = c[2];
-    colorLayer.data[pixelPos+3] = c[3];
+    colorLayer.data[pixelPos] = paintColorArr[0];
+    colorLayer.data[pixelPos+1] = paintColorArr[1];
+    colorLayer.data[pixelPos+2] = paintColorArr[2];
+    colorLayer.data[pixelPos+3] = paintColorArr[3];
 }
 
 function getRandomOffset() {
